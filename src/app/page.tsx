@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/language-context";
 import LanguageSwitcher from "@/components/language-switcher";
 import DisclaimerModal from "@/components/disclaimer-modal";
+import { Analytics } from "@vercel/analytics/next";
 
 const FormSchema = z.object({
   patientData: z.string().min(10, {
@@ -94,6 +95,7 @@ export default function DashboardPage() {
           <ResultsDisplay results={results} isLoading={isLoading} />
         </main>
       </div>
+      <Analytics />
     </>
   );
 }

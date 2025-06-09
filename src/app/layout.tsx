@@ -6,6 +6,7 @@ import AppLogo from '@/components/layout/app-logo';
 import NavigationLinks from '@/components/layout/navigation-links';
 import { Toaster } from "@/components/ui/toaster";
 import { LanguageProvider } from '@/contexts/language-context';
+import MobileNavHeader from '@/components/layout/mobile-nav-header';
 
 export const metadata: Metadata = {
   title: 'ScoreDoc',
@@ -30,7 +31,9 @@ export default function RootLayout({
             <Sidebar>
               <SidebarHeader>
                 <AppLogo />
-                <SidebarTrigger />
+                {/* This trigger is for desktop (e.g., to collapse/expand non-offcanvas sidebars) */}
+                {/* It's hidden on mobile because MobileNavHeader provides the trigger */}
+                <SidebarTrigger className="hidden md:flex" />
               </SidebarHeader>
               <SidebarContent>
                 <NavigationLinks />
@@ -40,6 +43,7 @@ export default function RootLayout({
               </SidebarFooter>
             </Sidebar>
             <SidebarInset>
+              <MobileNavHeader /> {/* This will render the trigger button on mobile */}
               {children}
             </SidebarInset>
           </SidebarProvider>
