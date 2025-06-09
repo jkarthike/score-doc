@@ -18,14 +18,32 @@ const FormSchema = z.object({
 });
 type FormValues = z.infer<typeof FormSchema>;
 
+export type ScoreType = {
+  value: string;
+  label?: string; // For direct labels
+  labelKey?: string; // For translation keys
+};
+
+// Define score types here for use in this component and passed to PatientDataForm
+const SCORE_TYPES: readonly ScoreType[] = [
+  { value: "ALL", labelKey: "scoreTypeAll" },
+  { value: "HAS-BLED", labelKey: "scoreTypeHasBled" },
+  { value: "WELLS", labelKey: "scoreTypeWells" },
+  { value: "SOFA", labelKey: "scoreTypeSofa" },
+  { value: "CHA2DS2VASc", labelKey: "scoreTypeCha2ds2vasc" },
+  { value: "CURB65", labelKey: "scoreTypeCurb65" },
+  { value: "GCS", labelKey: "scoreTypeGcs" },
+] as const;
+
+
 export default function DashboardPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [results, setResults] = useState<ProcessPatientDataResult | null>(null);
-  const [showDisclaimer, setShowDisclaimer] = useState(true); // Show by default
+  const [showDisclaimer, setShowDisclaimer] = useState(true);
+  const [selectedScoreType, setSelectedScoreType] = useState<string>(SCORE_TYPES[0].value); // Default to "ALL"
   const { toast } = useToast();
   const { language, translations } = useLanguage();
 
-  // Effect to show disclaimer when language changes
   useEffect(() => {
     setShowDisclaimer(true);
   }, [language]);
@@ -38,7 +56,7 @@ export default function DashboardPage() {
     setIsLoading(true);
     setResults(null); 
     try {
-      const response = await processPatientData(data.patientData, language);
+      const response = await processPatientData(data.patientData, language, selectedScoreType);
       setResults(response);
       if (response.error && (!response.toolRecommendations && !response.calculatedScores)) {
         toast({
@@ -95,7 +113,13 @@ export default function DashboardPage() {
         </header>
         
         <main className="max-w-3xl mx-auto">
-          <PatientDataForm onSubmit={handleFormSubmit} isLoading={isLoading} />
+          <PatientDataForm 
+            onSubmit={handleFormSubmit} 
+            isLoading={isLoading}
+            scoreTypes={SCORE_TYPES}
+            selectedScoreType={selectedScoreType}
+            onScoreTypeChange={setSelectedScoreType}
+          />
           <ResultsDisplay results={results} isLoading={isLoading} />
         </main>
       </div>

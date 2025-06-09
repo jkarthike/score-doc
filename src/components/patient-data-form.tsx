@@ -17,19 +17,30 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ClipboardEdit, Loader2 } from "lucide-react";
 import { useLanguage } from "@/contexts/language-context";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { ScoreType } from "@/app/page"; // Import ScoreType
 
 const FormSchema = z.object({
   patientData: z.string().min(10, {
-    message: "Patient data must be at least 10 characters.", // This message could also be translated
+    message: "Patient data must be at least 10 characters.",
   }),
 });
 
 type PatientDataFormProps = {
   onSubmit: (data: z.infer<typeof FormSchema>) => Promise<void>;
   isLoading: boolean;
+  scoreTypes: readonly ScoreType[];
+  selectedScoreType: string;
+  onScoreTypeChange: (value: string) => void;
 };
 
-export default function PatientDataForm({ onSubmit, isLoading }: PatientDataFormProps) {
+export default function PatientDataForm({ 
+  onSubmit, 
+  isLoading, 
+  scoreTypes, 
+  selectedScoreType, 
+  onScoreTypeChange 
+}: PatientDataFormProps) {
   const { translations } = useLanguage();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -37,15 +48,6 @@ export default function PatientDataForm({ onSubmit, isLoading }: PatientDataForm
       patientData: "",
     },
   });
-  
-  // Update Zod schema message based on language if needed, or handle in FormMessage
-  // For simplicity, keeping English, but this could be dynamic:
-  // const dynamicFormSchema = z.object({
-  //   patientData: z.string().min(10, {
-  //     message: translations.patientDataMinLengthError || "Patient data must be at least 10 characters.",
-  //   }),
-  // });
-  // And then use dynamicFormSchema in useForm resolver.
 
   return (
     <Card className="shadow-lg">
@@ -76,6 +78,29 @@ export default function PatientDataForm({ onSubmit, isLoading }: PatientDataForm
                 </FormItem>
               )}
             />
+
+            <FormItem>
+              <FormLabel>{translations.scoreTypeLabel}</FormLabel>
+              <Select
+                onValueChange={onScoreTypeChange}
+                defaultValue={selectedScoreType}
+                disabled={isLoading}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder={translations.scoreTypeLabel} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {scoreTypes.map((type) => (
+                    <SelectItem key={type.value} value={type.value}>
+                      {type.labelKey ? translations[type.labelKey] : type.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </FormItem>
+
             <Button type="submit" disabled={isLoading} className="w-full sm:w-auto">
               {isLoading ? (
                 <>

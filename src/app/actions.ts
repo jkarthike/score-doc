@@ -11,15 +11,28 @@ export type ProcessPatientDataResult = {
   error?: string;
 };
 
-export async function processPatientData(patientData: string, language: Locale): Promise<ProcessPatientDataResult> {
+export async function processPatientData(
+  patientData: string,
+  language: Locale,
+  requestedScoreType?: string 
+): Promise<ProcessPatientDataResult> {
   if (!patientData || patientData.trim() === "") {
-    return { error: "Patient data cannot be empty." }; // This could also be translated server-side if needed
+    return { error: "Patient data cannot be empty." };
   }
 
   try {
     const recommendInput: RecommendScoringToolsInput = { patientData, language };
-    const calculateInput: CalculateScoresInput = { patientData, language };
+    // Pass "ALL" if requestedScoreType is undefined or explicitly "ALL", otherwise pass the specific type.
+    // The AI flow handles "ALL" as a special case for its default behavior.
+    const calculateInput: CalculateScoresInput = { 
+      patientData, 
+      language, 
+      requestedScoreType: requestedScoreType && requestedScoreType !== "ALL" ? requestedScoreType : undefined 
+    };
 
+    // If a specific score type is requested, we might only want to run calculateScores.
+    // However, tool recommendations can still be useful. For now, let's run both.
+    // This could be optimized later if only one is needed based on `requestedScoreType`.
     const [toolRecommendationsResult, calculatedScoresResult] = await Promise.allSettled([
       recommendScoringTools(recommendInput),
       calculateScores(calculateInput)
