@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { CalculateScoresOutput } from "@/ai/flows/calculate-scores";
@@ -25,7 +26,13 @@ export default function CalculatedScoresDisplay({ data }: CalculatedScoresDispla
     return null;
   }
 
-  const hasScores = data.hasBledScore !== undefined || data.wellsScore !== undefined || data.sofaScore !== undefined;
+  const hasScores =
+    data.hasBledScore !== undefined ||
+    data.wellsScore !== undefined ||
+    data.sofaScore !== undefined ||
+    data.cha2ds2vascScore !== undefined ||
+    data.curb65Score !== undefined ||
+    data.gcsScore !== undefined;
 
   return (
     <Card className="shadow-md">
@@ -47,6 +54,9 @@ export default function CalculatedScoresDisplay({ data }: CalculatedScoresDispla
             <ScoreItem label="HAS-BLED Score" value={data.hasBledScore} />
             <ScoreItem label="WELLS Score (DVT/PE)" value={data.wellsScore} />
             <ScoreItem label="SOFA Score" value={data.sofaScore} />
+            <ScoreItem label="CHA₂DS₂-VASc Score" value={data.cha2ds2vascScore} />
+            <ScoreItem label="CURB-65 Score" value={data.curb65Score} />
+            <ScoreItem label="Glasgow Coma Scale (GCS)" value={data.gcsScore} />
           </div>
         ) : (
           <div className="flex items-center gap-2 text-muted-foreground p-3 border border-dashed rounded-md">

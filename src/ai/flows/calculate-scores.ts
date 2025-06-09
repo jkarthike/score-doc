@@ -24,6 +24,9 @@ const CalculateScoresOutputSchema = z.object({
   hasBledScore: z.number().optional().describe('The HAS-BLED score, if applicable.'),
   wellsScore: z.number().optional().describe('The WELLS score for DVT/PE, if applicable.'),
   sofaScore: z.number().optional().describe('The SOFA score, if applicable.'),
+  cha2ds2vascScore: z.number().optional().describe('The CHA₂DS₂-VASc score, if applicable.'),
+  curb65Score: z.number().optional().describe('The CURB-65 score, if applicable.'),
+  gcsScore: z.number().optional().describe('The Glasgow Coma Scale (GCS) score, if applicable.'),
   recommendations: z.string().describe('Any recommendations based on the calculated scores.'),
 });
 
@@ -39,7 +42,7 @@ const calculateScoresPrompt = ai.definePrompt({
   output: {schema: CalculateScoresOutputSchema},
   prompt: `You are an AI assistant specialized in calculating medical scores.
   Respond in the language: {{#if language}}{{language}}{{else}}en{{/if}}.
-  Based on the following patient data, calculate the HAS-BLED, WELLS, and SOFA scores if applicable.
+  Based on the following patient data, calculate the HAS-BLED, WELLS, SOFA, CHA₂DS₂-VASc, CURB-65, and Glasgow Coma Scale (GCS) scores if applicable.
   If a score cannot be calculated due to insufficient information, omit that score from the output.
 
   Patient Data: {{{patientData}}}
@@ -59,3 +62,4 @@ const calculateScoresFlow = ai.defineFlow(
     return output!;
   }
 );
+

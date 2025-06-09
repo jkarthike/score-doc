@@ -19,10 +19,10 @@ const defaultLocale: Locale = 'de';
 export const AllTranslations: Record<Locale, Translations> = {
   de: {
     dashboardTitle: 'ScoreDoc',
-    dashboardSubtitle: 'Geben Sie Patientendaten ein, um KI-gestützte Empfehlungen für Bewertungstools und berechnete Scores zu erhalten.',
+    dashboardSubtitle: 'Geben Sie Patientendaten ein, um KI-gestützte Empfehlungen und berechnete Scores für Systeme wie HAS-BLED, WELLS, SOFA, CHA₂DS₂-VASc, CURB-65 und GCS zu erhalten.',
     patientDataInputTitle: 'Patientendateneingabe',
     patientDataLabel: 'Geben Sie Patienteninformationen ein (Symptome, Krankengeschichte, Laborergebnisse usw.)',
-    patientDataPlaceholder: 'z.B. 75 J. Mann mit Hypertonie in der Anamnese, stellt sich mit plötzlich einsetzenden Brustschmerzen vor...',
+    patientDataPlaceholder: 'z.B. 75 J. Mann, Anamnese mit Hypertonie, Vorhofflimmern, unter Warfarin. Stellt sich mit plötzlich einsetzenden Brustschmerzen, Atemnot vor. GCS 15. Verwirrt, AF 22, BD 90/60. Kürzliche Operation...',
     getScoresButton: 'Scores & Empfehlungen erhalten',
     processingButton: 'Verarbeite...',
     referencesTitle: 'Referenzen für Bewertungssysteme',
@@ -47,10 +47,10 @@ export const AllTranslations: Record<Locale, Translations> = {
   },
   en: {
     dashboardTitle: 'ScoreDoc',
-    dashboardSubtitle: 'Enter patient data to get AI-powered scoring tool recommendations and calculated scores.',
+    dashboardSubtitle: 'Enter patient data to get AI-powered recommendations and calculated scores for systems like HAS-BLED, WELLS, SOFA, CHA₂DS₂-VASc, CURB-65, and GCS.',
     patientDataInputTitle: 'Patient Data Input',
     patientDataLabel: 'Enter patient information (symptoms, medical history, lab results, etc.)',
-    patientDataPlaceholder: 'e.g., 75 y/o male with history of hypertension, presenting with sudden onset chest pain...',
+    patientDataPlaceholder: 'e.g., 75 y/o male, history of hypertension, atrial fibrillation, on warfarin. Presents with sudden onset chest pain, shortness of breath. GCS 15. Confused, RR 22, BP 90/60. Recent surgery...',
     getScoresButton: 'Get Scores & Recommendations',
     processingButton: 'Processing...',
     referencesTitle: 'Scoring System References',
@@ -75,10 +75,10 @@ export const AllTranslations: Record<Locale, Translations> = {
   },
   nl: {
     dashboardTitle: 'ScoreDoc',
-    dashboardSubtitle: 'Voer patiëntgegevens in om AI-gestuurde aanbevelingen voor scoretools en berekende scores te krijgen.',
+    dashboardSubtitle: 'Voer patiëntgegevens in voor AI-gestuurde aanbevelingen en berekende scores voor systemen zoals HAS-BLED, WELLS, SOFA, CHA₂DS₂-VASc, CURB-65 en GCS.',
     patientDataInputTitle: 'Patiëntgegevens Invoer',
     patientDataLabel: 'Voer patiëntinformatie in (symptomen, medische geschiedenis, laboratoriumresultaten, enz.)',
-    patientDataPlaceholder: 'bijv. 75-jarige man met voorgeschiedenis van hypertensie, presenteert zich met plotseling begin van pijn op de borst...',
+    patientDataPlaceholder: 'bijv. 75-jarige man, voorgeschiedenis van hypertensie, atriumfibrilleren, gebruikt warfarine. Presenteert zich met plotselinge pijn op de borst, kortademigheid. GCS 15. Verward, AF 22, BD 90/60. Recente operatie...',
     getScoresButton: 'Scores & Aanbevelingen ophalen',
     processingButton: 'Verwerken...',
     referencesTitle: 'Referenties voor Scoretabel Systemen',
@@ -124,3 +124,4 @@ export const useLanguage = (): LanguageContextType => {
   }
   return context;
 };
+
